@@ -1,8 +1,98 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
-:root { font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif; color: #f4f4f5; background: #09090b; font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+/* The `dark:` variant is driven by an explicit data-theme attribute on <html>
+   rather than the OS preference, so the navbar toggle is always authoritative.
+   Light is the default theme (see the boot script in index.html). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---- Semantic theme tokens -------------------------------------------------
+   Components reference these through the Tailwind color names declared in the
+   `@theme inline` block below (bg / surface / line / fg / muted ...), so a
+   theme swap is a single attribute change and never a class rewrite. */
+:root, [data-theme="light"] {
+  /* Tinted paper rather than #fff: the page carries a cool cast pulled from the
+     brand blue, and cards sit *above* it in pure white. That inverts the dark
+     theme's logic (there, surfaces are lighter than the page) and is what gives
+     the light theme depth instead of reading as one flat sheet. */
+  --c-bg: #eaeff9;
+  --c-surface: #ffffff;
+  --c-line: #d3dbef;
+  --c-line2: #bcc6e0;
+  --c-fg: #101a2e;
+  --c-fg2: #33415e;
+  --c-muted: #66718e;
+  --c-muted2: #445070;
+  --c-muted3: #97a1bb;
+  --c-accent: #2563eb;
+  /* Veil laid over hero video / card artwork so overlaid copy stays readable. */
+  --c-veil: rgba(234, 239, 249, .84);
+  --c-veil-soft: rgba(234, 239, 249, .55);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --c-bg: #09090b;
+  --c-surface: #18181b;
+  --c-line: #27272a;
+  --c-line2: #3f3f46;
+  --c-fg: #f4f4f5;
+  --c-fg2: #d4d4d8;
+  --c-muted: #71717a;
+  --c-muted2: #a1a1aa;
+  --c-muted3: #52525b;
+  --c-accent: #2563eb;
+  --c-veil: rgba(9, 9, 11, .78);
+  --c-veil-soft: rgba(9, 9, 11, .5);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--c-bg);
+  --color-surface: var(--c-surface);
+  --color-line: var(--c-line);
+  --color-line2: var(--c-line2);
+  --color-fg: var(--c-fg);
+  --color-fg2: var(--c-fg2);
+  --color-muted: var(--c-muted);
+  --color-muted2: var(--c-muted2);
+  --color-muted3: var(--c-muted3);
+}
+
+:root {
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  color: var(--c-fg);
+  background: var(--c-bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
 * { box-sizing: border-box; }
+/* Ambient wash behind the shell, light theme only: two wide, low-opacity
+   pools of the brand blue and a cyan companion, so the top of the page has
+   air and colour instead of flat paper. Sections further down paint their own
+   solid background over it, which keeps it a hero glow rather than a tint on
+   everything. The dark theme deliberately has none - its depth comes from the
+   near-black page. */
+[data-theme="light"] #root > div {
+  background-image:
+    radial-gradient(1150px 560px at 10% -12%, rgba(37, 99, 235, .22), transparent 64%),
+    radial-gradient(920px 480px at 100% 2%, rgba(56, 189, 248, .20), transparent 62%),
+    radial-gradient(760px 520px at 88% 46%, rgba(129, 140, 248, .13), transparent 66%);
+  background-repeat: no-repeat;
+}
+/* Light theme only: cards are white on a tinted page, so a soft cast shadow is
+   what separates them from it. The dark theme keeps its flat, bordered look -
+   shadows are invisible against a near-black page anyway. */
+[data-theme="light"] .work-scroller article,
+[data-theme="light"] #services article {
+  box-shadow: 0 1px 2px rgba(16, 26, 46, .05), 0 14px 30px -18px rgba(16, 26, 46, .28);
+}
+[data-theme="light"] .work-scroller article:hover,
+[data-theme="light"] #services article:hover {
+  box-shadow: 0 2px 4px rgba(16, 26, 46, .06), 0 22px 44px -20px rgba(37, 99, 235, .32);
+}
+
 /* Smooth scrolling is enabled only once the page has finished loading (see App.jsx).
    Enabling it on first paint made every layout shift and scroll-restoration
    correction animate, which read as the page elastically fighting the scroll. */
@@ -10,10 +100,14 @@ html { overscroll-behavior-y: none; }
 html[data-scroll-ready='true'] { scroll-behavior: smooth; }
 :target, section[id], main[id] { scroll-margin-top: 92px; }
 @media (prefers-reduced-motion: reduce) { html[data-scroll-ready='true'] { scroll-behavior: auto; } }
-body { margin: 0; min-width: 320px; }
-button, a { font: inherit; }
-button { cursor: pointer; }
-a { color: inherit; text-decoration: none; }
+body { margin: 0; min-width: 320px; background: var(--c-bg); color: var(--c-fg); transition: background-color .25s ease, color .25s ease; }
+/* Kept inside @layer base so utilities (text-white on the blue CTAs, for
+   instance) still win over these resets. */
+@layer base {
+  button, a { font: inherit; }
+  button { cursor: pointer; }
+  a { color: inherit; text-decoration: none; }
+}
 ::selection { color: #fff; background: #2563eb; }
 
 /* Looping niche marquee (decorative, non-interactive). The track holds two
