@@ -22,7 +22,7 @@ const defaultDeliverables = [
 
 function ConceptCard({
   item,
-  brandName = 'DOTIN.',
+  brandName = 'DOT IN MEDIA',
   category,
   title,
   price = 'SPEC CONCEPT',
@@ -44,7 +44,7 @@ function ConceptCard({
   const projectDeliverables = deliverables.length > 0 ? deliverables : defaultDeliverables
   const projectDriveFileId = driveFileId ?? project.driveFileId ?? DEFAULT_DRIVE_FILE_ID
   const drivePreviewUrl = `https://drive.google.com/file/d/${projectDriveFileId}/preview`
-  const inquiryUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hi DOTIN, I would like to discuss a project similar to ${projectTitle}.`)}`
+  const inquiryUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hi DOT IN MEDIA, I would like to discuss a project similar to ${projectTitle}.`)}`
 
   const openModal = () => {
     setIsFrameLoading(true)
@@ -77,7 +77,7 @@ function ConceptCard({
   return (
     <>
       <motion.article
-        className="group relative isolate overflow-hidden rounded-2xl border border-line bg-surface shadow-2xl shadow-black/10 transition-colors duration-300 hover:border-blue-500/50"
+        className="group relative isolate overflow-hidden rounded-2xl border border-line bg-surface shadow-2xl shadow-black/10 transition-colors duration-300 hover:border-accent/50"
         initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
         whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.1 }}
@@ -86,7 +86,7 @@ function ConceptCard({
       >
         <button
           type="button"
-          className="relative block aspect-[4/3] w-full cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset"
+          className="relative block aspect-[4/3] w-full cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset"
           onClick={openModal}
           onKeyDown={handleCardKeyDown}
           aria-label={`Open ${projectTitle} concept details`}
@@ -99,17 +99,17 @@ function ConceptCard({
           <div className="absolute inset-0 bg-gradient-to-b from-bg/75 via-transparent to-bg/95" />
           <div className="absolute inset-x-0 top-0 flex items-start justify-between gap-4 p-4 sm:p-5">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-bg/70 px-3 py-1.5 font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-white backdrop-blur-md">
-              <Clapperboard size={12} className="text-blue-400" />
+              <Clapperboard size={12} className="text-accent-highlight" />
               {brandName}
             </span>
-            <span className="rounded-full border border-blue-400/30 bg-blue-600/15 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.14em] text-blue-200 backdrop-blur-md">
+            <span className="rounded-full border border-accent-highlight/30 bg-accent/15 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.14em] text-accent-pale backdrop-blur-md">
               {projectCategory}
             </span>
           </div>
           <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-4 sm:p-5">
             <div>
               <span className="mb-2 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted2">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
+                <span className="h-1.5 w-1.5 rounded-full bg-accent" />
                 View concept
               </span>
               <h2 className="max-w-[18rem] text-lg font-semibold uppercase leading-tight tracking-[-0.03em] text-white sm:text-xl">
@@ -147,7 +147,7 @@ function ConceptCard({
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}
-                className="absolute right-4 top-4 z-10 grid h-9 w-9 place-items-center rounded-full border border-line bg-bg/75 text-fg2 backdrop-blur-md transition hover:border-blue-500/60 hover:text-fg focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                className="absolute right-4 top-4 z-10 grid h-9 w-9 place-items-center rounded-full border border-line bg-bg/75 text-fg2 backdrop-blur-md transition hover:border-accent/60 hover:text-fg focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 aria-label="Close concept details"
               >
                 <X size={17} />
@@ -167,7 +167,7 @@ function ConceptCard({
               </div>
               <aside className="flex flex-col p-6 sm:p-8">
                 <div>
-                  <div className="flex items-center justify-between gap-4 font-mono text-[9px] uppercase tracking-[0.16em] text-blue-400">
+                  <div className="flex items-center justify-between gap-4 font-mono text-[9px] uppercase tracking-[0.16em] text-accent-highlight">
                     <span>{brandName}</span>
                     <span>{projectCategory}</span>
                   </div>
@@ -181,14 +181,14 @@ function ConceptCard({
                   <ul className="mt-4 space-y-3">
                     {projectDeliverables.map((deliverable) => (
                       <li className="flex items-start gap-3 text-sm text-fg2" key={deliverable}>
-                        <Check size={15} className="mt-0.5 shrink-0 text-blue-500" />
+                        <Check size={15} className="mt-0.5 shrink-0 text-accent" />
                         <span>{deliverable}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
                 <a
-                  className="mt-9 inline-flex items-center justify-center gap-3 rounded-xl bg-blue-600 px-4 py-3.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-white transition hover:bg-blue-500"
+                  className="mt-9 inline-flex items-center justify-center gap-3 rounded-xl bg-accent px-4 py-3.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-accent-ink transition hover:bg-accent-highlight"
                   href={inquiryUrl}
                   target="_blank"
                   rel="noreferrer"

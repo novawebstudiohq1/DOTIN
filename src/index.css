@@ -11,44 +11,57 @@
    `@theme inline` block below (bg / surface / line / fg / muted ...), so a
    theme swap is a single attribute change and never a class rewrite. */
 :root, [data-theme="light"] {
-  /* Tinted paper rather than #fff: the page carries a cool cast pulled from the
-     brand blue, and cards sit *above* it in pure white. That inverts the dark
-     theme's logic (there, surfaces are lighter than the page) and is what gives
-     the light theme depth instead of reading as one flat sheet. */
-  --c-bg: #eaeff9;
-  --c-surface: #ffffff;
-  --c-line: #d3dbef;
-  --c-line2: #bcc6e0;
-  --c-fg: #101a2e;
-  --c-fg2: #33415e;
-  --c-muted: #66718e;
-  --c-muted2: #445070;
-  --c-muted3: #97a1bb;
-  --c-accent: #2563eb;
+  /* Light / Editorial — warm, tactile paper and restrained antique gold. */
+  --c-bg: #EDE6D8;
+  --c-secondary: #e5dfd3;
+  --c-surface: #eae4d8;
+  --c-line: #d9d2c5;
+  --c-line2: #c8bfae;
+  --c-fg: #201d19;
+  --c-heading: #171614;
+  --c-fg2: #403c36;
+  --c-muted: #625c53;
+  --c-muted2: #625c52;
+  --c-muted3: #898176;
+  --c-primary: #201d19;
+  --c-primary-hover: #171614;
+  --c-accent: #b58a3a;
+  --c-accent-highlight: #d4b66a;
+  --c-accent-ink: #171614;
+  --c-accent-pale: #e7d9b7;
   /* Veil laid over hero video / card artwork so overlaid copy stays readable. */
-  --c-veil: rgba(234, 239, 249, .84);
-  --c-veil-soft: rgba(234, 239, 249, .55);
+  --c-veil: rgba(23, 22, 20, .44);
+  --c-veil-soft: rgba(23, 22, 20, .24);
   color-scheme: light;
 }
 
 [data-theme="dark"] {
-  --c-bg: #09090b;
-  --c-surface: #18181b;
-  --c-line: #27272a;
-  --c-line2: #3f3f46;
-  --c-fg: #f4f4f5;
-  --c-fg2: #d4d4d8;
-  --c-muted: #71717a;
-  --c-muted2: #a1a1aa;
-  --c-muted3: #52525b;
-  --c-accent: #2563eb;
-  --c-veil: rgba(9, 9, 11, .78);
-  --c-veil-soft: rgba(9, 9, 11, .5);
+  /* Dark / Cinematic — obsidian grounds the work; champagne adds precision. */
+  --c-bg: #0d0d0c;
+  --c-secondary: #171715;
+  --c-surface: #1b1a18;
+  --c-line: #302d27;
+  --c-line2: #48433a;
+  --c-fg: #f3efe6;
+  --c-heading: #f3efe6;
+  --c-fg2: #d5d0c6;
+  --c-muted: #a8a298;
+  --c-muted2: #a8a298;
+  --c-muted3: #706b63;
+  --c-primary: #f3efe6;
+  --c-primary-hover: #ffffff;
+  --c-accent: #c9a24a;
+  --c-accent-highlight: #e0c477;
+  --c-accent-ink: #0d0d0c;
+  --c-accent-pale: #3a301d;
+  --c-veil: rgba(13, 13, 12, .58);
+  --c-veil-soft: rgba(13, 13, 12, .32);
   color-scheme: dark;
 }
 
 @theme inline {
   --color-bg: var(--c-bg);
+  --color-secondary: var(--c-secondary);
   --color-surface: var(--c-surface);
   --color-line: var(--c-line);
   --color-line2: var(--c-line2);
@@ -57,6 +70,19 @@
   --color-muted: var(--c-muted);
   --color-muted2: var(--c-muted2);
   --color-muted3: var(--c-muted3);
+  --color-primary: var(--c-primary);
+  --color-primary-hover: var(--c-primary-hover);
+  --color-accent: var(--c-accent);
+  --color-accent-highlight: var(--c-accent-highlight);
+  --color-accent-ink: var(--c-accent-ink);
+  --color-accent-pale: var(--c-accent-pale);
+
+  /* Compatibility aliases keep existing component class contracts on the
+     shared editorial palette; they never resolve to a blue value. */
+  --color-blue-200: var(--c-accent-pale);
+  --color-blue-400: var(--c-accent-highlight);
+  --color-blue-500: var(--c-accent);
+  --color-blue-600: var(--c-accent);
 }
 
 :root {
@@ -68,29 +94,15 @@
   -webkit-font-smoothing: antialiased;
 }
 * { box-sizing: border-box; }
-/* Ambient wash behind the shell, light theme only: two wide, low-opacity
-   pools of the brand blue and a cyan companion, so the top of the page has
-   air and colour instead of flat paper. Sections further down paint their own
-   solid background over it, which keeps it a hero glow rather than a tint on
-   everything. The dark theme deliberately has none - its depth comes from the
-   near-black page. */
-[data-theme="light"] #root > div {
-  background-image:
-    radial-gradient(1150px 560px at 10% -12%, rgba(37, 99, 235, .22), transparent 64%),
-    radial-gradient(920px 480px at 100% 2%, rgba(56, 189, 248, .20), transparent 62%),
-    radial-gradient(760px 520px at 88% 46%, rgba(129, 140, 248, .13), transparent 66%);
-  background-repeat: no-repeat;
-}
-/* Light theme only: cards are white on a tinted page, so a soft cast shadow is
-   what separates them from it. The dark theme keeps its flat, bordered look -
-   shadows are invisible against a near-black page anyway. */
+/* Paper, photography and typography carry the composition—no ambient colour
+   washes or decorative gradients are used. */
 [data-theme="light"] .work-scroller article,
 [data-theme="light"] #services article {
-  box-shadow: 0 1px 2px rgba(16, 26, 46, .05), 0 14px 30px -18px rgba(16, 26, 46, .28);
+  box-shadow: 0 1px 2px rgba(32, 29, 25, .05), 0 14px 30px -18px rgba(32, 29, 25, .14);
 }
 [data-theme="light"] .work-scroller article:hover,
 [data-theme="light"] #services article:hover {
-  box-shadow: 0 2px 4px rgba(16, 26, 46, .06), 0 22px 44px -20px rgba(37, 99, 235, .32);
+  box-shadow: 0 2px 4px rgba(32, 29, 25, .06), 0 22px 44px -20px rgba(32, 29, 25, .20);
 }
 
 /* Smooth scrolling is enabled only once the page has finished loading (see App.jsx).
@@ -101,14 +113,27 @@ html[data-scroll-ready='true'] { scroll-behavior: smooth; }
 :target, section[id], main[id] { scroll-margin-top: 92px; }
 @media (prefers-reduced-motion: reduce) { html[data-scroll-ready='true'] { scroll-behavior: auto; } }
 body { margin: 0; min-width: 320px; background: var(--c-bg); color: var(--c-fg); transition: background-color .25s ease, color .25s ease; }
-/* Kept inside @layer base so utilities (text-white on the blue CTAs, for
+/* Kept inside @layer base so utilities (text-white on primary CTAs, for
    instance) still win over these resets. */
 @layer base {
+  h1, h2, h3 { color: var(--c-heading); }
   button, a { font: inherit; }
   button { cursor: pointer; }
   a { color: inherit; text-decoration: none; }
 }
-::selection { color: #fff; background: #2563eb; }
+::selection { color: var(--c-accent-ink); background: var(--c-accent-highlight); }
+
+/* Preserve understated secondary actions and apply the accent consistently to
+   CTAs, selected controls and keyboard focus. */
+@layer utilities {
+  .bg-blue-600.text-white { color: var(--c-accent-ink); }
+  .bg-blue-600.hover\:bg-blue-500:hover { background-color: var(--c-accent-highlight); }
+  .hover\:border-blue-500:hover,
+  .hover\:border-blue-500\/50:hover,
+  .hover\:border-blue-500\/60:hover { border-color: var(--c-accent); }
+  .border-line2.hover\:border-muted:hover { border-color: var(--c-accent); color: var(--c-accent); }
+  .focus-visible\:ring-blue-500:focus-visible { --tw-ring-color: var(--c-accent); }
+}
 
 /* Looping niche marquee (decorative, non-interactive). The track holds two
    identical copies of the list, so translating it by -50% lands exactly on the
@@ -129,6 +154,33 @@ body { margin: 0; min-width: 320px; background: var(--c-bg); color: var(--c-fg);
 }
 @media (prefers-reduced-motion: reduce) {
   .niche-marquee { animation: none; }
+}
+
+/* Process cards lift like a selected storyboard frame without changing the
+   grid's layout or competing with the section's editorial rhythm. */
+#process .group {
+  position: relative;
+  transition: transform .28s ease, background-color .28s ease, box-shadow .28s ease;
+}
+#process .group:hover {
+  z-index: 1;
+  transform: translateY(-6px) scale(1.015);
+  background: var(--c-surface);
+  box-shadow: 0 14px 28px -20px rgba(13, 13, 12, .55);
+}
+@media (prefers-reduced-motion: reduce) {
+  #process .group:hover { transform: none; }
+}
+
+/* The closing banner remains edge-to-edge but uses a deliberately tighter
+   cinematic crop than the source asset. */
+footer img[src="/footer image.png"] {
+  height: 20vw;
+  object-fit: cover;
+  object-position: 40% center;
+}
+@media (max-width: 767px) {
+  footer img[src="/footer image.png"] { height: 95px; }
 }
 
 /* Concepts-in-motion grid: capped height so extra films scroll inside the
